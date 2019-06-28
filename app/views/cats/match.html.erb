@@ -1,0 +1,11 @@
+<% @matches.each do |match| %>
+  <div>
+    <p><%= "Name: #{match['name']}" %></p>
+    <p>
+      <% match['photos'].each do |photo| %>
+        <%= image_tag photo['small'] %>
+      <% end %>
+    </p>
+    <p><%= link_to nil, match['url'] %></p>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+<%= form_tag("/cats", method: "get") do %>
+  <% @quiz.questions.each_with_index do |question, index| %>
+    <div>
+      <%= label_tag("q#{index}", question[:question]) %>
+    </div>
+    <div>
+      <%= radio_button_tag("q#{index}", "yes") %>
+      <%= label_tag("q#{index}_yes", "Yes") %>
+      <%= radio_button_tag("q#{index}", "no") %>
+      <%= label_tag("q#{index}_no", "No") %>
+    </div>
+  <% end %>
+  <div>
+    <%= submit_tag("Find Cats") %>
+  </div>
+<% end %>
