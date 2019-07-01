@@ -14,28 +14,28 @@ class Quiz
     [
       {
         question: 'Would your ideal cat be active such as running around the house entertaining you with their antics?',
-        keywords: ['energetic','active','fun'],
-        exclusions: ['calm','relaxed','peaceful','gentle']
+        keywords: ['energetic','active','fun','happy'],
+        exclusions: ['calm','relaxed','peaceful','gentle','manner']
       },
       {
         question: 'Would your ideal cat like to play with toys?',
-        keywords: ['playful','fun']
+        keywords: ['playful','fun','curious','happy']
       },
       {
         question: 'Would your ideal cat be affectionate such as by nuzzling you with their head?',
-        keywords: ['affectionate','loving','sweet','kiss','friendly']
+        keywords: ['affectionate','loving','sweet','kiss','friendly','outgoing','happy']
       },
       {
         question: 'Would your ideal cat like to lay with you or sleep in your bed?',
-        keywords: ['snuggle','cuddle','affectionate']
+        keywords: ['snuggle','snuggly', 'cuddle', 'cuddly', 'affectionate','calm','manner']
       },
       {
         question: 'Would your ideal cat like to follow you around?',
-        keywords: ['friendly','social']
+        keywords: ['friendly','social','loyal','curious']
       },
         {
         question:   'Would your ideal cat be independent and keep to themselves unless engaged?',
-        keywords:   ['solo','loner','independent'],
+        keywords:   ['solo','loner','independent','low key'],
         exclusions: ['outgoing','very social']
       },
       {

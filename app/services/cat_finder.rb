@@ -18,7 +18,7 @@ class CatFinder
   private
 
   def adoptable_cat? animal
-    animal['type'] == 'Cat' && animal['status'] == 'adoptable'
+        animal['type'] == 'Cat' && animal['status'] == 'adoptable' 
   end
 
   def animals

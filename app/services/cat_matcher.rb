@@ -1,5 +1,4 @@
 class CatMatcher
-
   def self.matches **args
     new( args ).matches
   end
@@ -24,19 +23,7 @@ class CatMatcher
 
   def matching_cat? cat
     tags = cat['tags'].map(&:downcase)
-    environment = cat['environment']
-
-    # Get the intersection of tags and matching keywords.
-    # If there are matched keywords, this is a potential match.
-    matched_tags = tags & matching_keywords
-    match_found = matched_tags.length > 0
-
-    # Get the intersection of tags and exclusion keywords.
-    # If there are matched exclusions, this cannot be a match.
-    excluded_tags = tags & exclusion_keywords
-    exclusion_found = excluded_tags.length > 0
-
-    # Match with environment if attributes are present
+    age = cat['age'].downcase
     environment_matched = true
     if matching_environment.include? 'children'
       environment_matched &= cat['environment']['children']
@@ -48,7 +35,9 @@ class CatMatcher
       environment_matched &= cat['environment']['cats']
     end
 
-    match_found && !exclusion_found && environment_matched
+    puts tags
+
+    matching_keywords.include?(tags) && environment_matched == true #tags.include?(exclusion_keywords) == false && age.include?(matching_questions.to_s) == true
   end
 
   def matching_questions
