@@ -33,9 +33,9 @@ class Quiz
         question: 'Would your ideal cat like to follow you around?',
         keywords: ['friendly','social','loyal','curious']
       },
-        {
-        question:   'Would your ideal cat be independent and keep to themselves unless engaged?',
-        keywords:   ['solo','loner','independent','low key'],
+      {
+        question: 'Would your ideal cat be independent and keep to themselves unless engaged?',
+        keywords: ['solo','loner','independent','low key'],
         exclusions: ['outgoing','very social']
       },
       {
@@ -49,6 +49,10 @@ class Quiz
       {
         question: 'Do you have or want a dog/have dogs?',
         environment: ['dogs']
+      },
+      {
+        question: 'What age is your ideal cat?',
+        options: ['baby', 'young', 'adult', 'senior']
       }
     ]
   end
