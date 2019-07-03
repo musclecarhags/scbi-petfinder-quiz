@@ -1,4 +1,7 @@
 class CatMatcher
+
+age_matched = false
+
   def self.matches **args
     new( args ).matches
   end
@@ -11,7 +14,7 @@ class CatMatcher
     @matches ||= find_matches
   end
 
-  private
+  #private
 
   def answers
     @answers ||= @params.collect { |k,v| v }
@@ -23,7 +26,19 @@ class CatMatcher
 
   def matching_cat? cat
     tags = cat['tags'].map(&:downcase)
-    age = cat['age'].downcase
+    environment = cat['environment']
+
+    # Get the intersection of tags and matching keywords.
+    # If there are matched keywords, this is a potential match.
+    $matched_tags = tags & matching_keywords
+    match_found = $matched_tags.length > 0
+
+    # Get the intersection of tags and exclusion keywords.
+    # If there are matched exclusions, this cannot be a match.
+    excluded_tags = tags & exclusion_keywords
+    exclusion_found = excluded_tags.length > 0
+
+    # Match with environment if attributes are present
     environment_matched = true
     if matching_environment.include? 'children'
       environment_matched &= cat['environment']['children']
@@ -34,10 +49,12 @@ class CatMatcher
     if matching_environment.include? 'cats'
       environment_matched &= cat['environment']['cats']
     end
+    age = cat['age'].downcase
 
-    puts tags
-
-    matching_keywords.include?(tags) && environment_matched == true #tags.include?(exclusion_keywords) == false && age.include?(matching_questions.to_s) == true
+    age_matched = true
+    if age.include?(age_keywords.to_s)
+    end
+    match_found && !exclusion_found && environment_matched &&  age_matched == true
   end
 
   def matching_questions
@@ -45,7 +62,7 @@ class CatMatcher
       .zip( answers )
       .select { |q,a| a == "yes" }
       .collect { |q,a| q }
-  end
+    end
 
   def matching_environment
     @matching_environment ||= matching_questions
@@ -55,6 +72,13 @@ class CatMatcher
   def matching_keywords
     @matching_keywords ||= matching_questions
       .collect { |q| q[:keywords] }.flatten.compact || []
+  end
+
+  def age_keywords
+    @age_keywords ||= quiz_questions
+    .zip( answers )
+    .select { |q,a| a == "baby" || "young" || "adult" || "senior" }
+    .collect { |q,a| q }
   end
 
   def exclusion_keywords
@@ -69,5 +93,4 @@ class CatMatcher
   def adoptable_cats
     @adoptable_cats ||= CatFinder.adoptable_cats
   end
-
 end

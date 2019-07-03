@@ -1,10 +1,13 @@
 <%= form_tag("/cats", method: "get") do %>
 <% counter = 0 %>
+<% total_count = @quiz.questions.count %>
+<% total_count = total_count - 4 %>
+
   <% @quiz.questions.each_with_index do |question, index| %>
     <div>
+      <% if counter < total_count %>
       <%= label_tag("q#{index}", question[:question]) %>
-    </div>
-    <div>
+      <br>
       <%= radio_button_tag("q#{index}", "yes", checked="checked") %>
       <%= label_tag("q#{index}_yes", "Yes") %>
       <%= radio_button_tag("q#{index}", "no") %>
@@ -12,6 +15,7 @@
       <% counter = counter + 1 %>
       </div>
     <% end %>
+  <% end %>
 <div>
   Is your ideal cat
   <%= check_box_tag("q#{counter}", "baby", checked="checked") %>

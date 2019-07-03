@@ -1,3 +1,5 @@
+<%= "Based on your quiz answers, you are looking for a cat that is: #{$matched_tags.to_s.delete "']''""''['" }" %><br>
+<%= "Here are your results..." %> <br>
 <% @matches.each do |match| %>
   <div>
     <p><%= "Name: #{match['name']}" %></p>
@@ -7,5 +9,6 @@
       <% end %>
     </p>
     <p><%= link_to nil, match['url'] %></p>
+    <%= "Description: #{match['tags'].to_s.delete "']''""''['"}" %><br>
   </div>
 <% end %>

@@ -49,6 +49,22 @@ class Quiz
       {
         question: 'Do you have or want a dog/have dogs?',
         environment: ['dogs']
+      },
+      {
+      question: '',
+      age: ['baby']
+      },
+      {
+      question: '',
+      age: ['young']
+      },
+      {
+      question: '',
+      age: ['adult']
+      },
+      {
+      question: '',
+      age: ['senior']
       }
     ]
   end
