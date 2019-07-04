@@ -1,7 +1,6 @@
 class CatMatcher
-
-age_matched = false
-
+    $x = 0
+    $percent = Array.new
   def self.matches **args
     new( args ).matches
   end
@@ -14,8 +13,6 @@ age_matched = false
     @matches ||= find_matches
   end
 
-  #private
-
   def answers
     @answers ||= @params.collect { |k,v| v }
   end
@@ -27,11 +24,23 @@ age_matched = false
   def matching_cat? cat
     tags = cat['tags'].map(&:downcase)
     environment = cat['environment']
+    matched_age = matching_ages.include? cat['age'].downcase
 
+    if cat['name'].downcase.include? 'adopt'
+      status_matched = false
+    else
+      status_matched = true
+    end
     # Get the intersection of tags and matching keywords.
     # If there are matched keywords, this is a potential match.
-    $matched_tags = tags & matching_keywords
-    match_found = $matched_tags.length > 0
+    matched_tags = matching_keywords & tags
+    match_found = matched_tags.length > 0
+    $keywords = matching_keywords.uniq.sort
+    $percent[$x] = matched_tags.length.to_f / $keywords.length.to_f * 100
+    #puts matched_tags.length
+    #puts $keywords.length
+    #puts $percent[$x]
+    $x = $x + 1
 
     # Get the intersection of tags and exclusion keywords.
     # If there are matched exclusions, this cannot be a match.
@@ -49,12 +58,7 @@ age_matched = false
     if matching_environment.include? 'cats'
       environment_matched &= cat['environment']['cats']
     end
-    age = cat['age'].downcase
-
-    age_matched = true
-    if age.include?(age_keywords.to_s)
-    end
-    match_found && !exclusion_found && environment_matched &&  age_matched == true
+    match_found && !exclusion_found && environment_matched && matched_age && status_matched
   end
 
   def matching_questions
@@ -74,11 +78,9 @@ age_matched = false
       .collect { |q| q[:keywords] }.flatten.compact || []
   end
 
-  def age_keywords
-    @age_keywords ||= quiz_questions
-    .zip( answers )
-    .select { |q,a| a == "baby" || "young" || "adult" || "senior" }
-    .collect { |q,a| q }
+  def matching_ages
+      @matching_ages ||= answers
+      .select { |a| a == "baby" || "young" || "adult" || "senior" }
   end
 
   def exclusion_keywords
@@ -92,5 +94,6 @@ age_matched = false
 
   def adoptable_cats
     @adoptable_cats ||= CatFinder.adoptable_cats
+    #$cats ||= CatFinder.adoptable_cats
   end
 end

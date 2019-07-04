@@ -15,10 +15,8 @@ class CatFinder
     animals.select { |animal| adoptable_cat? animal }
   end
 
-  private
-
   def adoptable_cat? animal
-        animal['type'] == 'Cat' && animal['status'] == 'adoptable' 
+        animal['type'] == 'Cat' && animal['status'] == 'adoptable'
   end
 
   def animals
@@ -56,9 +54,8 @@ class CatFinder
     response = self.class.get(
       "/animals",
       headers: auth_headers,
-      query: { organization: organization }
+      query: { organization: organization, limit: '100' }
     )
     JSON.parse( response.body )['animals']
   end
-
 end

@@ -23,11 +23,11 @@ class Quiz
       },
       {
         question: 'Would your ideal cat be affectionate such as by nuzzling you with their head?',
-        keywords: ['affectionate','loving','sweet','kiss','friendly','outgoing','happy']
+        keywords: ['affectionate','loving','sweet','kiss','friendly','outgoing','happy', 'precious', 'petting']
       },
       {
         question: 'Would your ideal cat like to lay with you or sleep in your bed?',
-        keywords: ['snuggle','snuggly', 'cuddle', 'cuddly', 'affectionate','calm','manner']
+        keywords: ['snuggle','snuggler', 'snuggly', 'cuddle', 'cuddly', 'affectionate','calm','manner', 'laid back']
       },
       {
         question: 'Would your ideal cat like to follow you around?',

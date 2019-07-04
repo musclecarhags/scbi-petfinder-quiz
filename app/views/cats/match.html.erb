@@ -1,14 +1,18 @@
-<%= "Based on your quiz answers, you are looking for a cat that is: #{$matched_tags.to_s.delete "']''""''['" }" %><br>
-<%= "Here are your results..." %> <br>
+<% x = 0 %>
+<p><%= "Based on your quiz answers, you are looking for a cat that is: #{$keywords.to_s.delete "']''""''['"}" %></p>
+<p><%= "Here are your results..." %> </p>
+<br>
 <% @matches.each do |match| %>
   <div>
-    <p><%= "Name: #{match['name']}" %></p>
-    <p>
-      <% match['photos'].each do |photo| %>
-        <%= image_tag photo['small'] %>
+    <p><p style="font-size:20px text-align:center"><%= "Name: #{match['name']}" %></p>
+    <p><% match['photos'].each do |photo| %>
+        <%= image_tag photo['medium'] %>
       <% end %>
     </p>
+    <p><%= "Description: #{match['tags'].to_s.delete "']''""''['"}" %></p>
+    <p><%= "Percent matched: #{$percent[x]}%" %></p>
+    <% x = x + 1 %>
     <p><%= link_to nil, match['url'] %></p>
-    <%= "Description: #{match['tags'].to_s.delete "']''""''['"}" %><br>
   </div>
+  <p></p>
 <% end %>

@@ -8,7 +8,7 @@
       <% if counter < total_count %>
       <%= label_tag("q#{index}", question[:question]) %>
       <br>
-      <%= radio_button_tag("q#{index}", "yes", checked="checked") %>
+      <%= radio_button_tag("q#{index}", "yes") %>
       <%= label_tag("q#{index}_yes", "Yes") %>
       <%= radio_button_tag("q#{index}", "no") %>
       <%= label_tag("q#{index}_no", "No") %>
