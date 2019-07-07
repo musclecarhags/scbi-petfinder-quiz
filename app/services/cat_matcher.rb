@@ -1,6 +1,5 @@
 class CatMatcher
-    $x = 0
-    $percent = Array.new
+
   def self.matches **args
     new( args ).matches
   end
@@ -31,21 +30,27 @@ class CatMatcher
     else
       status_matched = true
     end
-    # Get the intersection of tags and matching keywords.
-    # If there are matched keywords, this is a potential match.
-    matched_tags = matching_keywords & tags
+    # for each keyword, checking if the tag is included in the keyword
+
+    matched_tags = tags.select do |tag|
+      matching_keywords.any? {|k| tag.include? k}
+    end
+
     match_found = matched_tags.length > 0
-    $keywords = matching_keywords.uniq.sort
-    $percent[$x] = matched_tags.length.to_f / $keywords.length.to_f * 100
-    #puts matched_tags.length
-    #puts $keywords.length
-    #puts $percent[$x]
-    $x = $x + 1
+
+    cat['percent'] = matched_tags.length.to_f / tags.length.to_f * 100
+
+    exclude = false
 
     # Get the intersection of tags and exclusion keywords.
     # If there are matched exclusions, this cannot be a match.
-    excluded_tags = tags & exclusion_keywords
-    exclusion_found = excluded_tags.length > 0
+    excluded_tags = tags.select do |tag|
+      exclusion_keywords.any? {|k| tag.include? k}
+    end
+
+    if excluded_tags.length > 0
+      exclude = true
+    end
 
     # Match with environment if attributes are present
     environment_matched = true
@@ -58,42 +63,42 @@ class CatMatcher
     if matching_environment.include? 'cats'
       environment_matched &= cat['environment']['cats']
     end
-    match_found && !exclusion_found && environment_matched && matched_age && status_matched
+    match_found && environment_matched && matched_age && status_matched && !exclude
   end
 
-  def matching_questions
-    @matching_questions ||= quiz_questions
-      .zip( answers )
-      .select { |q,a| a == "yes" }
-      .collect { |q,a| q }
-    end
-
-  def matching_environment
-    @matching_environment ||= matching_questions
-      .collect { |q| q[:environment] }.flatten.compact || []
+def matching_questions
+  @matching_questions ||= quiz_questions
+    .zip( answers )
+    .select { |q,a| a == "yes" }
+    .collect { |q,a| q }
   end
 
-  def matching_keywords
-    @matching_keywords ||= matching_questions
-      .collect { |q| q[:keywords] }.flatten.compact || []
-  end
+def matching_environment
+  @matching_environment ||= matching_questions
+    .collect { |q| q[:environment] }.flatten.compact || []
+end
 
-  def matching_ages
-      @matching_ages ||= answers
-      .select { |a| a == "baby" || "young" || "adult" || "senior" }
-  end
+def matching_keywords
+  @matching_keywords ||= matching_questions
+    .collect { |q| (q[:keywords] || []).map(&:downcase)}.flatten.compact || []
+end
 
-  def exclusion_keywords
-    @exclusion_keywords ||= matching_questions
-      .collect { |q| q[:exclusions] }.flatten.compact || []
-  end
+def matching_ages
+    @matching_ages ||= answers
+    .select { |a| a == "baby" || "young" || "adult" || "senior" }
+end
 
-  def quiz_questions
-    @quiz_questions ||= Quiz.questions
-  end
+def exclusion_keywords
+  @exclusion_keywords ||= matching_questions
+    .collect { |q| (q[:exclusions] || []).map(&:downcase)}.flatten.compact || []
+end
 
-  def adoptable_cats
-    @adoptable_cats ||= CatFinder.adoptable_cats
-    #$cats ||= CatFinder.adoptable_cats
-  end
+def quiz_questions
+  @quiz_questions ||= Quiz.questions
+end
+
+def adoptable_cats
+  @adoptable_cats ||= CatFinder.animals
+  #$cats ||= CatFinder.adoptable_cats
+end
 end

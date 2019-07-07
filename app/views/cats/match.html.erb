@@ -1,5 +1,5 @@
-<% x = 0 %>
-<p><%= "Based on your quiz answers, you are looking for a cat that is: #{$keywords.to_s.delete "']''""''['"}" %></p>
+<p><%= "Based on your quiz answers, you are looking for a cat that is: #{@keywords.join ', '}" %></p>
+<p><%= "and you would prefer a cat who is not: #{@exclude_keywords.join ', '}" %></p>
 <p><%= "Here are your results..." %> </p>
 <br>
 <% @matches.each do |match| %>
@@ -9,9 +9,8 @@
         <%= image_tag photo['medium'] %>
       <% end %>
     </p>
-    <p><%= "Description: #{match['tags'].to_s.delete "']''""''['"}" %></p>
-    <p><%= "Percent matched: #{$percent[x]}%" %></p>
-    <% x = x + 1 %>
+    <p><%= "Description: #{match['tags'].join ', '}" %></p>
+    <p><%= "Percent matching tags: #{match['percent']}" %></p>
     <p><%= link_to nil, match['url'] %></p>
   </div>
   <p></p>

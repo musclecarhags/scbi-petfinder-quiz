@@ -3,20 +3,12 @@ class CatFinder
   include HTTParty
   base_uri 'api.petfinder.com/v2'
 
-  def self.adoptable_cats
-    new.adoptable_cats
-  end
-
   def initialize
     @access_token = request_access_token
   end
 
-  def adoptable_cats
-    animals.select { |animal| adoptable_cat? animal }
-  end
-
-  def adoptable_cat? animal
-        animal['type'] == 'Cat' && animal['status'] == 'adoptable'
+  def self.animals
+    new.animals
   end
 
   def animals
@@ -54,8 +46,18 @@ class CatFinder
     response = self.class.get(
       "/animals",
       headers: auth_headers,
-      query: { organization: organization, limit: '100' }
+      query: { organization: organization, status: 'adoptable', pagination: 'total_pages', pagination: 'total_count'}
     )
-    JSON.parse( response.body )['animals']
+      parsed_response = JSON.parse( response.body )
+      total_count = parsed_response['pagination']['total_count']
+      total_pages = parsed_response['pagination']['total_pages']
+      puts total_count
+      puts total_pages
+      all_animals = []
+
+      1.upto(total_pages) do |page|
+        all_animals = parsed_response['animals']
+      end
+      all_animals
+    end
   end
-end
