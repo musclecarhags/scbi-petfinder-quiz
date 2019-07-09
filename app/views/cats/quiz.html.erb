@@ -1,36 +1,35 @@
 <%= form_tag("/cats", method: "get") do %>
 <% counter = 0 %>
 <% total_count = @quiz.questions.count %>
-<% total_count = total_count - 4 %>
+<% total_count = total_count - 1 %>
+<% ages = ['baby', 'young', 'adult', 'senior'] %>
 
   <% @quiz.questions.each_with_index do |question, index| %>
     <div>
       <% if counter < total_count %>
       <%= label_tag("q#{index}", question[:question]) %>
-      <br>
+      <div>
       <%= radio_button_tag("q#{index}", "yes") %>
       <%= label_tag("q#{index}_yes", "Yes") %>
       <%= radio_button_tag("q#{index}", "no") %>
       <%= label_tag("q#{index}_no", "No") %>
-      <% counter = counter + 1 %>
       </div>
+      <% else %>
+      <%= label_tag("q#{index}", question[:question]) %>
+      <div>
+        <% ages.each do |age| %>
+          <%= puts age %>
+           <%= check_box_tag("q#{index}", "#{age}") %>
+           <%= label_tag("q#{index}", "#{age}") %>
+        <% end %>
+      </div>
+      <% end %>
+      <% counter = counter + 1 %>
     <% end %>
-  <% end %>
-<div>
-  Is your ideal cat
-  <%= check_box_tag("q#{counter}", "baby", checked="checked") %>
-  <%= label_tag("q#{counter}_yes", "baby") %>
-  <% counter = counter + 1 %>
-  <%= check_box_tag("q#{counter}", "young", checked="checked") %>
-  <%= label_tag("q#{counter}_yes", "young") %>
-  <% counter = counter + 1 %>
-  <%= check_box_tag("q#{counter}", "adult", checked="checked") %>
-  <%= label_tag("q#{counter}_yes", "adult") %>
-  <% counter = counter + 1 %>
-  <%= check_box_tag("q#{counter}", "senior", checked="checked") %>
-  <%= label_tag("q#{counter}_yes", "senior") %>
-  </div>
-  <div>
+    </div>
+
+    <div>
     <%= submit_tag("Find Cats") %>
-  </div>
+    </div>
+
 <% end %>

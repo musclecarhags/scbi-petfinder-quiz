@@ -1,4 +1,5 @@
 <p><%= "Based on your quiz answers, you are looking for a cat that is: #{@keywords.join ', '}" %></p>
+<p><%= "who is #{@ages}" %></p>
 <p><%= "and you would prefer a cat who is not: #{@exclude_keywords.join ', '}" %></p>
 <p><%= "Here are your results..." %> </p>
 <br>
@@ -11,6 +12,7 @@
     </p>
     <p><%= "Description: #{match['tags'].join ', '}" %></p>
     <p><%= "Percent matching tags: #{match['percent']}" %></p>
+    <p><%= "Age: #{match['age']}" %></p>
     <p><%= link_to nil, match['url'] %></p>
   </div>
   <p></p>

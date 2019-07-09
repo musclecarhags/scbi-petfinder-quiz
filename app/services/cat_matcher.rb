@@ -23,7 +23,13 @@ class CatMatcher
   def matching_cat? cat
     tags = cat['tags'].map(&:downcase)
     environment = cat['environment']
-    matched_age = matching_ages.include? cat['age'].downcase
+    age = cat['age'].downcase
+
+    if matching_ages.include? age
+      matched_age = true
+    else
+      matched_age = false
+    end
 
     if cat['name'].downcase.include? 'adopt'
       status_matched = false
@@ -33,7 +39,7 @@ class CatMatcher
     # for each keyword, checking if the tag is included in the keyword
 
     matched_tags = tags.select do |tag|
-      matching_keywords.any? {|k| tag.include? k}
+      final_keywords.any? {|k| tag.include? k}
     end
 
     match_found = matched_tags.length > 0
@@ -75,7 +81,7 @@ def matching_questions
 
 def matching_environment
   @matching_environment ||= matching_questions
-    .collect { |q| q[:environment] }.flatten.compact || []
+    .collect { |q| (q[:environment] || []).map(&:downcase)}.flatten.compact || []
 end
 
 def matching_keywords
@@ -84,8 +90,8 @@ def matching_keywords
 end
 
 def matching_ages
-    @matching_ages ||= answers
-    .select { |a| a == "baby" || "young" || "adult" || "senior" }
+    ages = ['baby', 'young', 'adult', 'senior']
+    @matching_ages = answers & ages
 end
 
 def exclusion_keywords
@@ -99,6 +105,13 @@ end
 
 def adoptable_cats
   @adoptable_cats ||= CatFinder.animals
-  #$cats ||= CatFinder.adoptable_cats
+end
+
+def final_keywords
+  @final_keywords ||= matching_keywords - keyword_intersection
+end
+
+def keyword_intersection
+  @keyword_intersection = matching_keywords & exclusion_keywords
 end
 end

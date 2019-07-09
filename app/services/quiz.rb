@@ -14,29 +14,29 @@ class Quiz
     [
       {
         question: 'Would your ideal cat be active such as running around the house entertaining you with their antics?',
-        keywords: ['energetic','active','fun','happy'],
-        exclusions: ['calm','relaxed','peaceful','gentle','manner']
+        keywords: ['energetic', 'active', 'fun', 'happy'],
+        exclusions: ['calm', 'relaxed', 'peaceful', 'gentle', 'manner']
       },
       {
         question: 'Would your ideal cat like to play with toys?',
-        keywords: ['playful','fun','curious','happy']
+        keywords: ['playful', 'fun', 'curious', 'happy']
       },
       {
         question: 'Would your ideal cat be affectionate such as by nuzzling you with their head?',
-        keywords: ['affectionate','loving','sweet','kiss','friendly','outgoing','happy', 'precious', 'petting']
+        keywords: ['affectionate', 'loving', 'sweet', 'kiss', 'friendly', 'outgoing', 'happy', 'precious', 'petting']
       },
       {
         question: 'Would your ideal cat like to lay with you or sleep in your bed?',
-        keywords: ['snuggle','snuggler', 'snuggly', 'cuddle', 'cuddly', 'affectionate','calm','manner', 'laid back']
+        keywords: ['snuggle', 'snuggler', 'snuggly', 'cuddle', 'cuddly', 'affectionate', 'calm', 'manner', 'laid back']
       },
       {
         question: 'Would your ideal cat like to follow you around?',
-        keywords: ['friendly','social','loyal','curious']
+        keywords: ['friendly', 'social', 'loyal', 'curious']
       },
-        {
+      {
         question:   'Would your ideal cat be independent and keep to themselves unless engaged?',
-        keywords:   ['solo','loner','independent','low key'],
-        exclusions: ['outgoing','very social']
+        keywords:   ['solo', 'loner', 'independent', 'low key'],
+        exclusions: ['outgoing', 'very social']
       },
       {
         question: 'Do you have or want children?',
@@ -51,20 +51,8 @@ class Quiz
         environment: ['dogs']
       },
       {
-      question: '',
-      age: ['baby']
-      },
-      {
-      question: '',
-      age: ['young']
-      },
-      {
-      question: '',
-      age: ['adult']
-      },
-      {
-      question: '',
-      age: ['senior']
+        question: 'What age is your ideal cat?',
+        ages: ['baby', 'young', 'adult', 'senior']
       }
     ]
   end

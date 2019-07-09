@@ -43,21 +43,25 @@ class CatFinder
   end
 
   def request_animals
+    parsed_response = request_animal_page
+    total_pages = parsed_response['pagination']['total_pages']
+
+    all_animals = parsed_response['animals']
+    2.upto(total_pages) do |page|
+      parsed_response = request_animal_page page: page
+      all_animals += parsed_response['animals']
+    end
+
+    all_animals
+  end
+
+  def request_animal_page page: 1
     response = self.class.get(
       "/animals",
       headers: auth_headers,
-      query: { organization: organization, status: 'adoptable', pagination: 'total_pages', pagination: 'total_count'}
+      query: { organization: organization, status: 'adoptable', page: page }
     )
-      parsed_response = JSON.parse( response.body )
-      total_count = parsed_response['pagination']['total_count']
-      total_pages = parsed_response['pagination']['total_pages']
-      puts total_count
-      puts total_pages
-      all_animals = []
-
-      1.upto(total_pages) do |page|
-        all_animals = parsed_response['animals']
-      end
-      all_animals
-    end
+    JSON.parse( response.body )
   end
+
+end
