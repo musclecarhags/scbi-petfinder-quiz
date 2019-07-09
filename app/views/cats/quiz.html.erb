@@ -15,16 +15,16 @@
       <%= label_tag("q#{index}_no", "No") %>
       </div>
       <% else %>
-      <%= label_tag("q#{index}", question[:question]) %>
+      <%= label_tag("q#{total_count}", question[:question]) %>
       <div>
         <% ages.each do |age| %>
-          <%= puts age %>
-           <%= check_box_tag("q#{index}", "#{age}") %>
-           <%= label_tag("q#{index}", "#{age}") %>
+           <%= check_box_tag("q#{total_count}", "#{age}") %>
+           <%= label_tag("q#{total_count}_ages", "#{age}") %>
+           <% total_count = total_count + 1 %>
         <% end %>
-      </div>
-      <% end %>
-      <% counter = counter + 1 %>
+        </div>
+        <% end %>
+        <% counter = counter + 1 %>
     <% end %>
     </div>
 

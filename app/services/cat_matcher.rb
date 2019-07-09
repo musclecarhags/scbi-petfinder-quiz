@@ -72,16 +72,20 @@ class CatMatcher
     match_found && environment_matched && matched_age && status_matched && !exclude
   end
 
-def matching_questions
-  @matching_questions ||= quiz_questions
-    .zip( answers )
-    .select { |q,a| a == "yes" }
-    .collect { |q,a| q }
-  end
+def age_answers
+  @age_answers ||= quiz_questions
+    .select { |q,a| a != "yes" }
+end
 
+def matching_questions
+    @matching_questions ||= quiz_questions
+      .zip( answers )
+      .select { |q,a| a == "yes" }
+      .collect { |q,a| q }
+    end
 def matching_environment
   @matching_environment ||= matching_questions
-    .collect { |q| (q[:environment] || []).map(&:downcase)}.flatten.compact || []
+    .collect { |q| (q[:environment] || []).map(&:downcase)}.flatten.compact || [] & ages
 end
 
 def matching_keywords
@@ -91,7 +95,7 @@ end
 
 def matching_ages
     ages = ['baby', 'young', 'adult', 'senior']
-    @matching_ages = answers & ages
+    @matching_ages = age_answers & ages
 end
 
 def exclusion_keywords

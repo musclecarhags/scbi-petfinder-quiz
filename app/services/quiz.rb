@@ -51,8 +51,7 @@ class Quiz
         environment: ['dogs']
       },
       {
-        question: 'What age is your ideal cat?',
-        ages: ['baby', 'young', 'adult', 'senior']
+        question: 'What age is your ideal cat?'
       }
     ]
   end
