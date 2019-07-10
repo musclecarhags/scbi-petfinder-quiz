@@ -25,7 +25,7 @@ class CatMatcher
     environment = cat['environment']
     age = cat['age'].downcase
 
-    if matching_ages.include? age
+    if matching_ages.any? age
       matched_age = true
     else
       matched_age = false
@@ -72,34 +72,36 @@ class CatMatcher
     match_found && environment_matched && matched_age && status_matched && !exclude
   end
 
-def age_answers
-  @age_answers ||= quiz_questions
-    .select { |q,a| a != "yes" }
+def quiz_answers
+    @quiz_answers ||= quiz_questions
+      .zip( answers )
+      .collect { |q,a| q }
 end
 
-def matching_questions
-    @matching_questions ||= quiz_questions
-      .zip( answers )
-      .select { |q,a| a == "yes" }
-      .collect { |q,a| q }
-    end
+def yes_answers
+  @yes_answers ||= quiz_questions
+    .zip( answers )
+    .select { |q,a| a == "yes" }
+    .collect { |q,a| q }
+  end
+
 def matching_environment
-  @matching_environment ||= matching_questions
+  @matching_environment ||= yes_answers
     .collect { |q| (q[:environment] || []).map(&:downcase)}.flatten.compact || [] & ages
 end
 
 def matching_keywords
-  @matching_keywords ||= matching_questions
+  @matching_keywords ||= yes_answers
     .collect { |q| (q[:keywords] || []).map(&:downcase)}.flatten.compact || []
 end
 
 def matching_ages
-    ages = ['baby', 'young', 'adult', 'senior']
-    @matching_ages = age_answers & ages
+  ages = ['baby', 'young', 'adult', 'senior']
+  @matching_ages = quiz_answers & ages
 end
 
 def exclusion_keywords
-  @exclusion_keywords ||= matching_questions
+  @exclusion_keywords ||= yes_answers
     .collect { |q| (q[:exclusions] || []).map(&:downcase)}.flatten.compact || []
 end
 
