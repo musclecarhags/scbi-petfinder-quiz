@@ -23,9 +23,10 @@ class CatMatcher
   def matching_cat? cat
     tags = cat['tags'].map(&:downcase)
     environment = cat['environment']
+    age = []
     age = cat['age'].downcase
 
-    if matching_ages.any? age
+    if matching_ages.include? age
       matched_age = true
     else
       matched_age = false
@@ -96,8 +97,7 @@ def matching_keywords
 end
 
 def matching_ages
-  ages = ['baby', 'young', 'adult', 'senior']
-  @matching_ages = quiz_answers & ages
+  @matching_ages ||= quiz_answers & ['baby', 'young', 'adult', 'senior']
 end
 
 def exclusion_keywords

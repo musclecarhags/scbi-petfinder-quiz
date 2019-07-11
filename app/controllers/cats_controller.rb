@@ -9,6 +9,7 @@ class CatsController < ApplicationController
     @keywords = cat_matcher.final_keywords.uniq.sort
     @exclude_keywords = cat_matcher.exclusion_keywords.uniq.sort
     @ages = cat_matcher.matching_ages.join ', '
+    puts cat_matcher.matching_ages.join ', '
   end
 
   def quiz
