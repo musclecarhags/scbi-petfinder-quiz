@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Makes http fun again!
-gem 'httparty', '~> 0.17.0'
+gem 'httparty', '~> 0.21.0'
 
 # Multi-environment settings
 gem 'config', '~> 1.7.0'
